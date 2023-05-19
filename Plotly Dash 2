@@ -56,16 +56,16 @@ def get_filtered_df(spacex_df, selected_site):
               Input(component_id='site-dropdown',component_property='value'))
 def get_pie_chart(selected_site):
     if selected_site == 'ALL':
-        success_df = spacex_df[spacex_df['class']==1],
-        success_count = len(success_df),
-        failed_df = spacex_df[spacex_df['class']==0],
-        failed_count = len(failed_df),
-        fig = px.pie(values=[success_count,failed_count],names=['Successful','Failed'],title='Total Success Launches for All Sites')
+        success_df = spacex_df[spacex_df['class']==1]
+        success_count = len(success_df)
+        failure_df = spacex_df[spacex_df['class']==0]
+        failure_count = len(failure_df)
+        fig = px.pie(values=[success_count,failureq <qj_count],names=['Successful','Failed'],title='Total Success Launches for All Sites')
     else: 
-        selected_site_df = spacex_df[spacex_df['Launch Site']==selected_site],
+        selected_site_df = spacex_df[spacex_df['Launch Site']==selected_site]
         success_count = len(selected_site_df[selected_site_df['class'] == 1])
         failure_count = len(selected_site_df[selected_site_df['class'] == 0])
-        fig = px.pie(values=[success_count, failure_count], names=['Success', 'Failure'], title='Total success and failure count for {selected_site}')
+        fig = px.pie(values=[success_count, failure_count], names=['Success', 'Failure'], title=f'Total success and failure count for {selected_site}')
     return fig
     
 # TASK 4:
@@ -74,7 +74,7 @@ def get_pie_chart(selected_site):
               [Input(component_id='site-dropdown',component_property='value'),
                Input(component_id='payload-slider',component_property='value')])
 def update_scatter_chart(site,payload_range):
-    if site == 'All Sites':
+    if site == 'ALL':
         filtered_df = spacex_df[(spacex_df['Payload Mass (kg)']>=payload_range[0])&(spacex_df['Payload Mass (kg)']<=payload_range[1])]
     else:
         filtered_df = spacex_df[(spacex_df['Launch Site']==site)&(spacex_df['Payload Mass (kg)']>=payload_range[0])&(spacex_df['Payload Mass (kg)']<=payload_range[1])]
@@ -85,4 +85,3 @@ def update_scatter_chart(site,payload_range):
 if __name__ == '__main__':
     app.run_server(port=8051,debug=True,dev_tools_hot_reload=True)
 #run 
-
